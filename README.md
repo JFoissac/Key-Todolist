@@ -50,6 +50,17 @@ L'API sera disponible à l'adresse : http://localhost:8080/api/tasks
 - `POST /api/tasks` : Ajouter une nouvelle tâche
 - `PATCH /api/tasks/{id}/status` : Mettre à jour le statut d'une tâche
 
+### Documentation API avec Swagger
+
+L'API est documentée avec Swagger, ce qui permet de visualiser et tester facilement tous les endpoints disponibles.
+
+- Accès à Swagger UI : http://localhost:8080/swagger-ui/index.html
+
+Pour utiliser Swagger :
+1. Assurez-vous que le backend est en cours d'exécution
+2. Ouvrez l'URL ci-dessus dans votre navigateur
+3. Vous pouvez explorer tous les endpoints, voir leurs paramètres et les tester directement depuis l'interface
+
 ## Lancement du frontend (Angular)
 
 1. Assurez-vous d'avoir Node.js (version 18+) et npm installés sur votre machine
