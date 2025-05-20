@@ -1,0 +1,84 @@
+<div class="p-6 border rounded-lg bg-white shadow-sm">
+  <h2 class="text-xl font-bold mb-4">Pomodoro Timer</h2>
+  
+  <div *ngIf="!hasSelectedTask" class="text-center py-8">
+    <p class="text-gray-500 mb-4">Sélectionnez une tâche pour commencer un Pomodoro</p>
+  </div>
+  
+  <div *ngIf="hasSelectedTask">
+    <div class="mb-4">
+      <h3 class="font-medium">Tâche en cours:</h3>
+      <p class="text-lg">{{ taskTitle }}</p>
+    </div>
+    
+    <div class="flex items-center justify-center mb-6">
+      <div class="text-center">
+        <div class="text-5xl font-bold mb-2">{{ formattedTimeLeft }}</div>
+        <div class="text-sm text-gray-500">{{ stateLabel }}</div>
+      </div>
+    </div>
+    
+    <div class="flex justify-center space-x-3 mb-6">
+      <button 
+        *ngIf="isIdle"
+        (click)="startPomodoro()"
+        class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+        Commencer
+      </button>
+      
+      <ng-container *ngIf="!isIdle">
+        <button 
+          (click)="stopPomodoro()"
+          class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
+          Arrêter
+        </button>
+        <button 
+          (click)="pauseResumePomodoro()"
+          class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+          {{ pauseButtonText }}
+        </button>
+      </ng-container>
+    </div>
+    
+    <div class="border-t pt-4">
+      <h3 class="font-medium mb-2">Paramètres</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="workTime" class="block text-sm text-gray-600">Temps de travail (min)</label>
+          <input 
+            type="number" 
+            id="workTime" 
+            [(ngModel)]="workDuration"
+            [disabled]="!isIdle"
+            min="1" 
+            max="60" 
+            class="w-full p-2 border rounded-lg">
+        </div>
+        <div>
+          <label for="breakTime" class="block text-sm text-gray-600">Temps de pause (min)</label>
+          <input 
+            type="number" 
+            id="breakTime" 
+            [(ngModel)]="breakDuration"
+            [disabled]="!isIdle"
+            min="1" 
+            max="30" 
+            class="w-full p-2 border rounded-lg">
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-4">
+      <div class="flex justify-between text-sm text-gray-500">
+        <span>Sessions complétées: {{ completedSessionsCount }}</span>
+        <span>Objectif: {{ targetSessions }}</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-2.5 mt-1">
+        <div 
+          class="bg-blue-600 h-2.5 rounded-full" 
+          [style.width.%]="progressPercentage">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

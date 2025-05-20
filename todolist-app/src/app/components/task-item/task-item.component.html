@@ -1,0 +1,44 @@
+<div 
+  class="p-4 border rounded-lg cursor-pointer transition-all duration-200 flex items-center"
+  [class.shadow-md]="isSelected"
+  [class.border-blue-500]="isSelected"
+  [class.bg-red-50]="task.priority === 'high'">
+  
+  <div class="flex-grow">
+    <div class="flex items-center">
+      <input 
+        type="checkbox" 
+        [checked]="task.status === 'completed' || task.status === 'cancelled'"
+        (change)="toggleCompleted($event)"
+        (click)="$event.stopPropagation()"
+        (keydown)="$event.stopPropagation()"
+        class="mr-3 h-5 w-5 cursor-pointer"
+        [attr.aria-label]="checkboxAriaLabel">
+      <!-- Indicateur de priorité -->
+      <span *ngIf="task.priority" class="ml-2">
+        <!-- Flèche vers le haut (priorité haute) -->
+        <img *ngIf="task.priority === 'high'" src="icons/upward-arrow.png" alt="Priorité haute" class="inline-block w-5 h-5">
+        
+        <!-- Flèche vers le bas (priorité basse) -->
+        <img *ngIf="task.priority === 'low'" src="icons/down-arrow.png" alt="Priorité basse" class="inline-block w-5 h-5">
+      </span>
+      <h3 class="font-medium" [class.line-through]="task.status === 'completed' || task.status === 'cancelled'">
+        {{ task.label }}
+      </h3>
+      
+      
+    </div>
+    
+    <p class="text-sm text-gray-600 ml-8">{{ task.description }}</p>
+    
+    <div class="flex items-center mt-2 text-xs ml-8 space-x-2">
+      <span 
+        class="px-2 py-1 rounded-full text-xs"
+        [ngClass]="statusClass">
+        {{ statusLabel }}
+      </span>
+      
+      <!-- Pas de badge de priorité textuel -->
+    </div>
+  </div>
+</div>

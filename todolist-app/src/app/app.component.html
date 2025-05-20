@@ -1,0 +1,39 @@
+<div class="min-h-screen bg-gray-50">
+  <header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <h1 class="text-2xl font-bold text-gray-900">Liste de tâches</h1>
+    </div>
+  </header>
+  
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="grid grid-cols-1 gap-6" [ngClass]="{'md:grid-cols-3': hasSelectedTask, 'md:grid-cols-1': !hasSelectedTask}">
+      <!-- Liste des tâches -->
+      <div [ngClass]="{'md:col-span-1': hasSelectedTask, 'md:col-span-3': !hasSelectedTask}" class="bg-white p-4 rounded-lg shadow">
+        <app-task-list></app-task-list>
+      </div>
+      
+      <!-- Détail de la tâche -->
+      <div *ngIf="hasSelectedTask" class="md:col-span-1 bg-white p-4 rounded-lg shadow">
+        <app-task-detail></app-task-detail>
+      </div>
+      
+      <!-- Pomodoro -->
+      <div *ngIf="hasSelectedTask" class="md:col-span-1 bg-white p-4 rounded-lg shadow">
+        <app-pomodoro></app-pomodoro>
+      </div>
+    </div>
+  </main>
+  
+  <footer class="bg-white shadow mt-8 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-gray-500 text-sm">
+        Key Consulting Test - Jean-François FOISSAC-GEGOUX - Créé avec Angular et Tailwind CSS
+      </p>
+    </div>
+  </footer>
+  
+  <!-- Composant de dialogue pour les formulaires de tâches -->
+  <app-task-dialog></app-task-dialog>
+</div>
+
+<router-outlet />

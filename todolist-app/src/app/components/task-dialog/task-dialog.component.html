@@ -1,0 +1,21 @@
+<dialog
+  [open]="isDialogOpen"
+  *ngIf="isDialogOpen"
+  class="bg-transparent p-0 w-full h-full fixed inset-0 z-40 flex items-center justify-center"
+  (keydown.escape)="closeDialog()"
+>
+  <div
+    class="fixed inset-0 bg-black bg-opacity-50"
+    (click)="closeDialog()"
+    (keydown)="closeDialog()"
+  ></div>
+  <div
+    class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-auto relative z-10"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+    tabindex="-1"
+  >
+    <app-task-form [task]="taskForForm" (close)="handleFormClose()">
+    </app-task-form>
+  </div>
+</dialog>

@@ -1,0 +1,66 @@
+<div class="flex flex-col h-full">
+  <div class="mb-4">
+    <h2 class="text-2xl font-bold mb-4">Mes tâches</h2>
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button 
+        (click)="loadAllTasks()" 
+        class="px-3 py-1 rounded-lg text-sm" 
+        [ngClass]="allTasksButtonClass">
+        Toutes
+      </button>
+      <button 
+        (click)="loadTasksByStatus(TaskStatus.PENDING)" 
+        class="px-3 py-1 rounded-lg text-sm"
+        [ngClass]="getStatusButtonClass(TaskStatus.PENDING)">
+        À faire
+      </button>
+      <button 
+        (click)="loadTasksByStatus(TaskStatus.IN_PROGRESS)" 
+        class="px-3 py-1 rounded-lg text-sm"
+        [ngClass]="getStatusButtonClass(TaskStatus.IN_PROGRESS)">
+        En cours
+      </button>
+      <button 
+        (click)="loadTasksByStatus(TaskStatus.COMPLETED)" 
+        class="px-3 py-1 rounded-lg text-sm"
+        [ngClass]="getStatusButtonClass(TaskStatus.COMPLETED)">
+        Terminées
+      </button>
+      <button 
+        (click)="loadTasksByStatus(TaskStatus.CANCELLED)" 
+        class="px-3 py-1 rounded-lg text-sm"
+        [ngClass]="getStatusButtonClass(TaskStatus.CANCELLED)">
+        Annulées
+      </button>
+    </div>
+  </div>
+  
+  <div class="overflow-y-auto flex-grow">
+    <div *ngIf="isLoading" class="flex justify-center items-center h-32">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+    </div>
+    
+    <div *ngIf="!isLoading && taskList.length === 0" class="text-center py-8 bg-gray-50 rounded-lg">
+      <p class="text-gray-500">Aucune tâche trouvée</p>
+    </div>
+    
+    <div *ngIf="!isLoading && taskList.length > 0" class="space-y-3">
+      <app-task-item 
+        *ngFor="let task of taskList; trackBy: trackById"
+        [task]="task" 
+        [isSelected]="isTaskSelected(task)"
+        (click)="selectTaskIfHasId(task)"
+        (keydown.enter)="selectTaskIfHasId(task)"
+        (statusChange)="updateTaskStatusIfHasId(task, $event)">
+      </app-task-item>
+    </div>
+  </div>
+  
+  <div class="mt-4">
+    <button 
+      (click)="openNewTaskDialog()"
+      class="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center justify-center">
+      <span class="mr-2">+</span> Nouvelle tâche
+    </button>
+  </div>
+</div>

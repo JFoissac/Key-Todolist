@@ -1,0 +1,30 @@
+  updateTaskStatus(id: number, status: TaskStatus) {
+    this.state.update(state => ({ ...state, loading: true, error: null }));
+    
+    // Convertir le TaskStatus en boolean completed pour l'API
+    const completed = status === TaskStatus.COMPLETED;
+    
+    this.taskService.updateTaskStatus(id, completed).pipe(
+      takeUntil(this.destroy$),
+      tap(updatedTask => {
+        this.state.update(state => ({
+          ...state,
+          loading: false,
+          tasks: state.tasks.map(task =>
+            task.id === id ? updatedTask : task
+          )
+        }));
+        
+        // Notifier les autres composants qu'une tâche a été mise à jour
+        this.eventService.notifyTaskUpdated();
+      }),
+      catchError(error => {
+        this.state.update(state => ({
+          ...state,
+          loading: false,
+          error: 'Failed to update task status'
+        }));
+        return of(null);
+      })
+    ).subscribe();
+  }
